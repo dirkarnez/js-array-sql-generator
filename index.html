@@ -4,38 +4,41 @@
 
   <script type="module">
         import { Parser } from "https://cdn.jsdelivr.net/npm/acorn@8.12.1/+esm";
-function MyArray(...args) {
-    // Ensure MyArray behaves like an Array
-    const arr = new Array(...args);
-    Object.setPrototypeOf(arr, MyArray.prototype);
-    return arr;
-}
+	  
+	function MyArray(...args) {
+	    // Ensure MyArray behaves like an Array
+	    const arr = new Array(...args);
+	    Object.setPrototypeOf(arr, MyArray.prototype);
+	    return arr;
+	}
 
-// Ensure MyArray inherits from Array
-Object.setPrototypeOf(MyArray.prototype, Array.prototype);
-MyArray.prototype.constructor = MyArray;
-
-// Override the filter method to intercept
-MyArray.prototype.filter = function(callback) {
-    console.log("Intercepting Array.filter");
-    // Call the original Array filter method
-    const result = Array.prototype.filter.call(this, callback);
-    console.log("Filtered result:", result);
-    return {result, sql: generateSQL(callback.toString())};
-};
-
-function generateSQL(code) {
-	Parser.parse(code);
+	// Ensure MyArray inherits from Array
+	Object.setPrototypeOf(MyArray.prototype, Array.prototype);
+	MyArray.prototype.constructor = MyArray;
 	
-}
+	// Override the filter method to intercept
+	MyArray.prototype.filter = function(callback) {
+	    console.log("Intercepting Array.filter");
+	    // Call the original Array filter method
+	    const result = Array.prototype.filter.call(this, callback);
+	    console.log("Filtered result:", result);
+	    return {result, sql: generateSQL(callback.toString())};
+	};
+	
+	function generateSQL(code) {
+		const parsed = Parser.parse(code);
+		debugger;
+		const sql = "" // parse code and generate accordingly
+		return sql;
+	}
 
-// Test the functionality
-const myArr = new MyArray(1, 22, 33, 12);
-console.log("Original MyArray:", myArr);
-
-const filtered = myArr.filter(a => a > 10);
-debugger;
-console.log("Filtered MyArray:", filtered);
+	// Test the functionality
+	const myArr = new MyArray(1, 22, 33, 12);
+	console.log("Original MyArray:", myArr);
+	
+	const filtered = myArr.filter(a => a > 10);
+	debugger;
+	console.log("Filtered MyArray:", filtered);
 </script>
 
 </body>
