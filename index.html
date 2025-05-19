@@ -4,7 +4,19 @@
 
   <script type="module">
         import { Parser } from "https://cdn.jsdelivr.net/npm/acorn@8.12.1/+esm";
-	  
+
+	  /* babel es5 transformation
+   	class MyArray extends Array {
+      filter(callback) {
+        return super.filter.call(this, callback);
+      }
+    }
+const myArr = new MyArray(1, 22, 33, 12);
+	console.log("Original MyArray:", myArr.filter(a => a > 10));
+	
+
+
+*/
 	function MyArray(...args) {
 	    // Ensure MyArray behaves like an Array
 	    const arr = new Array(...args);
